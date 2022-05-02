@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/leaderboard.css') }}">
+    <title>Leaderboard</title>
+</head>
+<body>
+    {{ leaderboard|safe }}
+    {% if finaldate %}
+        {% if finaldate >= todaydate %}
+            Submission closes at {{ finaldate }}!
+        {% else %}
+            Submission closed
+        {% endif %}
+    {% endif %}
+</body>
+</html>
