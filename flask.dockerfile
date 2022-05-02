@@ -1,9 +1,8 @@
 FROM python:3.8-slim
 
-RUN pip install flask
-RUN pip install flask-table
-RUN pip install flask-httpauth 
-RUN pip install scikit-learn
+COPY requirements.txt /
+
+RUN pip install -r requirements.txt
 RUN pip install waitress
 
 COPY accuracy_table.py /
@@ -23,7 +22,10 @@ ENTRYPOINT [ "waitress-serve" ]
 
 CMD [ "--listen=0.0.0.0:5000", "app:app" ]
 
-#docker build -f flask.dockerfile -t leaderboard
+# Create docker file
+#docker build -f flask.dockerfile -t leaderboard .
 
+# Create a volume for persistent storage
 #docker volume create leaderboard
-#docker run -p 5000:5000 -v leaderboar:/data --restart unless-stopped -d leaderboard
+# Run Docker file
+#docker run -p 5000:5000 -v leaderboard:/data --restart unless-stopped -d leaderboard
