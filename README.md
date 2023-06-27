@@ -12,8 +12,8 @@ The key features of the API are:
 # Usage
 
 * Clone project
-* Create a instance folder with a config.py
-* Set your application details (see config.py in root for options)
+* Create an instance folder with a config.py
+* Set your application details in "instance/config.py" (see config.py in root for options)
 * Test by running app.py
 * Deploy by creating a docker file (see flask.dockerfile)
-* Communication with the API are described in test.py
+* Communication with the API is described in test.py
