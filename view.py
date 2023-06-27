@@ -24,7 +24,7 @@ def verify_password(username, password):
 @auth_admin.verify_password
 def verify_password(username, password):
     print(current_app.config)
-    if username == current_app.config["ADMIN"] and check_password_hash(current_app.config["ADMIN_PASSWORD"], password):
+    if username == current_app.config["ADMIN"] and check_password_hash(current_app.config["ADMIN_PASSWORD_HASH"], password):
         return username
 
 

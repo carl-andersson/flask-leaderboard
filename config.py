@@ -10,6 +10,6 @@ HOST = "localhost:5000"
 SECRET_KEY = '' #Run generate secret and store the secret in instance/config.py
 
 ADMIN = "admin"
-ADMIN_PASSWORD = generate_password_hash("password")
+ADMIN_PASSWORD_HASH = generate_password_hash("password")
 
 MAXIMUM_SUBMISSIONS = 5
