@@ -1,4 +1,5 @@
-from flask import jsonify, make_response, request, abort, render_template, escape, current_app
+from flask import jsonify, make_response, request, abort, render_template, current_app
+from markupsafe import escape
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_httpauth import HTTPBasicAuth
 
@@ -23,7 +24,6 @@ def verify_password(username, password):
 
 @auth_admin.verify_password
 def verify_password(username, password):
-    print(current_app.config)
     if username == current_app.config["ADMIN"] and check_password_hash(current_app.config["ADMIN_PASSWORD_HASH"], password):
         return username
 
@@ -46,11 +46,14 @@ def get_leaderboard():
 
     table.sort(key=lambda x: x.f1 if type(x.f1) != str else 0, reverse=True)
 
+
+
     finaldate = database.get_finaldate()
     if finaldate:
         finaldate = datetime.strptime(finaldate, "%Y%m%d").date()
-    return render_template("leaderboard.html", leaderboard=AccTable(table).__html__(), finaldate=finaldate,
+    result =  render_template("leaderboard.html", rows=table, finaldate=finaldate,
                            todaydate=datetime.now().date())
+    return result
 
 
 @api.route('/register', methods=["PUT"])

@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/leaderboard.css') }}">
+    <link href="https://unpkg.com/gridjs/dist/theme/mermaid.min.css" rel="stylesheet" />
     <title>Leaderboard</title>
 </head>
 <body>
-    {{ leaderboard|safe }}
+    <div id="leaderboard"></div>
     {% if finaldate %}
         {% if finaldate >= todaydate %}
             Submission closes at {{ finaldate }}!
@@ -15,4 +15,35 @@
         {% endif %}
     {% endif %}
 </body>
+<script src="https://unpkg.com/gridjs/dist/gridjs.umd.js"></script>
+<script>
+  new gridjs.Grid({
+    columns: [
+      { id: 'team', name: 'Team' },
+      { id: 'acc', name: 'Accuracy' },
+      { id: 'f1', name: 'F1'},
+      { id: 'auc', name: 'AUC'},
+      { id: 'ap', name: 'Average precision' },
+      { id: 'note', name: 'Note'}
+
+    ],
+    data: [
+      {% for row in rows %}
+        {
+          team: '{{ row.team}}',
+          acc: '{{ row.acc }}',
+          f1: '{{ row.f1 }}',
+          auc: '{{ row.auc }}',
+          ap: '{{ row.ap }}',
+          note: '{{ row.note}}',
+        },
+      {% endfor %}
+    ],
+    search: {
+      selector: (cell, rowIndex, cellIndex) => [0, 1, 4].includes(cellIndex) ? cell : null,
+    },
+    sort: true,
+    pagination: false,
+  }).render(document.getElementById('leaderboard'));
+</script>
 </html>
